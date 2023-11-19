@@ -1,6 +1,5 @@
 import streamlit as st
 import requests
-import webbrowser
 
 # Fungsi untuk verifikasi login
 def verify_login(username, password):
@@ -17,32 +16,29 @@ def verify_login(username, password):
     
     return False
 
-def main():
-    st.title("Journey Mancing")
-    st.markdown(
-        """
-        <style>
-        .reportview-container {
-            background: url('https://p4.wallpaperbetter.com/wallpaper/600/885/315/fishing-astronaut-person-fishing-in-crack-area-illustration-wallpaper-preview.jpg?t=1');
-            background-size: cover;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # Input username dan password
+def login_page():
+    st.title("Login")
     username = st.text_input("Username")
     password = st.text_input("Password", type="password")
 
     if st.button("Login"):
         if verify_login(username, password):
             st.success("Login berhasil!")
-            # Buka halaman homepage di tab baru
-            new_tab_url = 'https://link-halaman-homepage.com'  # Ganti dengan URL homepage yang sebenarnya
-            webbrowser.open_new_tab(new_tab_url)
+            return True  # Kembalikan True jika login berhasil
         else:
             st.error("Username atau password salah")
+    
+    return False  # Kembalikan False jika login gagal
+
+def main_page():
+    st.title("Halaman Utama")
+    st.write("Selamat datang di Halaman Utama! Silakan lanjutkan dengan aktivitas Anda di sini.")
+
+def main():
+    if not login_page():
+        return
+    
+    main_page()
 
 if __name__ == "__main__":
     main()
