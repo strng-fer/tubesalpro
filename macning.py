@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import webbrowser
 
 # Fungsi untuk verifikasi login
 def verify_login(username, password):
@@ -37,7 +38,9 @@ def main():
     if st.button("Login"):
         if verify_login(username, password):
             st.success("Login berhasil!")
-            # Lanjutkan ke halaman berikutnya di sini
+            # Buka halaman homepage di tab baru
+            new_tab_url = 'https://link-halaman-homepage.com'  # Ganti dengan URL homepage yang sebenarnya
+            webbrowser.open_new_tab(new_tab_url)
         else:
             st.error("Username atau password salah")
 
