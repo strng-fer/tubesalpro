@@ -1,58 +1,42 @@
 import streamlit as st
-from sqlalchemy import create_engine
+import mysql.connector
 
-# Fungsi untuk menghubungkan ke database SQL
-def create_connection():
-    username = 'root'
-    password = 'FarestaHaerz135'
-    host = 'localhost'
-    database_name = 'journeymancing123'
+# Koneksi ke database SQL
+username = 'root'
+password = 'FarestaHaerz135'
+host = 'localhost'
+database_name = 'journeymancing123'
 
-    # Buat string koneksi
-    connection_string = f"mysql+mysqlconnector://{username}:{password}@{host}/{database_name}, pool_size=10, max_overflow=20)"
-
-    # Buat koneksi
-    engine = create_engine(connection_string)
-    conn = engine.connect()
-    return conn
-
-# Fungsi untuk melakukan login
-def login(username, password):
-    conn = create_connection()
-    query = f"SELECT * FROM users WHERE username='{username}' AND password='{password}'"
-    result = conn.execute(query)
-    return result.fetchone()
-
-# Fungsi untuk tampilan halaman login
-def login_page():
-    st.title("Journey Mancing")
-    st.markdown("## Silakan login untuk melanjutkan")
-
+try:
+    connection = mysql.connector.connect(
+        user=username, password=password, host=host, database=database_name
+    )
+    cursor = connection.cursor()
+    st.sidebar.title("Journey Mancing")
+    st.sidebar.image('background_image.jpg', caption='Background Mancing', use_column_width=True)
+    
+    # Halaman Login
+    st.title("Login")
     username_input = st.text_input("Username")
     password_input = st.text_input("Password", type="password")
-    login_button = st.button("Login")
 
-    if login_button:
-        user = login(username_input, password_input)
-        if user:
+    if st.button("Login"):
+        # Query untuk memeriksa apakah username dan password ada di database
+        query = "SELECT * FROM user WHERE username = %s AND password = %s"
+        cursor.execute(query, (username_input, password_input))
+        result = cursor.fetchone()
+
+        if result:
             st.success("Login berhasil!")
-            # Redirect ke halaman selanjutnya setelah login berhasil
-            st.write("Halaman selanjutnya...")
+            # Lanjutkan ke halaman berikutnya setelah berhasil login
+            # Tambahkan kode untuk halaman berikutnya di sini
         else:
-            st.error("Login gagal. Silakan coba lagi.")
+            st.error("Username atau password salah")
+            
+except mysql.connector.Error as e:
+    st.error(f"Gagal terhubung ke database: {e}")
 
-# Tampilan background mancing dengan CSS
-st.markdown(
-    """
-    <style>
-    body {
-        background-image: url('https://example.com/background-image.jpg');
-        background-size: cover;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# Tampilkan halaman login
-login_page()
+finally:
+    if 'connection' in locals() and connection.is_connected():
+        cursor.close()
+        connection.close()
