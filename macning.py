@@ -1,42 +1,44 @@
 import streamlit as st
-import mysql.connector
+import requests
 
-# Koneksi ke database SQL
-username = 'root'
-password = 'FarestaHaerz135'
-host = 'localhost'
-database_name = 'journeymancing123'
-
-try:
-    connection = mysql.connector.connect(
-        user=username, password=password, host=host, database=database_name
-    )
-    cursor = connection.cursor()
-    st.sidebar.title("Journey Mancing")
-    st.sidebar.image('background_image.jpg', caption='Background Mancing', use_column_width=True)
+# Fungsi untuk verifikasi login
+def verify_login(username, password):
+    # Ganti URL dengan URL file txt di GitHub yang berisi username dan password
+    url = 'https://raw.githubusercontent.com/nama_pengguna/nama_repo/main/credentials.txt'
+    response = requests.get(url)
+    credentials = response.text.split('\n')
     
-    # Halaman Login
-    st.title("Login")
-    username_input = st.text_input("Username")
-    password_input = st.text_input("Password", type="password")
+    for cred in credentials:
+        stored_username, stored_password = cred.split(',')
+        if username == stored_username and password == stored_password:
+            return True
+    
+    return False
+
+def main():
+    st.title("Journey Mancing")
+    st.markdown(
+        """
+        <style>
+        .reportview-container {
+            background: url('https://link_gambar_latar_belakang_mancing.jpg');
+            background-size: cover;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Input username dan password
+    username = st.text_input("Username")
+    password = st.text_input("Password", type="password")
 
     if st.button("Login"):
-        # Query untuk memeriksa apakah username dan password ada di database
-        query = "SELECT * FROM user WHERE username = %s AND password = %s"
-        cursor.execute(query, (username_input, password_input))
-        result = cursor.fetchone()
-
-        if result:
+        if verify_login(username, password):
             st.success("Login berhasil!")
-            # Lanjutkan ke halaman berikutnya setelah berhasil login
-            # Tambahkan kode untuk halaman berikutnya di sini
+            # Lanjutkan ke halaman berikutnya di sini
         else:
             st.error("Username atau password salah")
-            
-except mysql.connector.Error as e:
-    st.error(f"Gagal terhubung ke database: {e}")
 
-finally:
-    if 'connection' in locals() and connection.is_connected():
-        cursor.close()
-        connection.close()
+if __name__ == "__main__":
+    main()
