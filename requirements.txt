@@ -2,3 +2,4 @@ apps
 sqlalchemy
 mysql-connector-python
 webbrowser
+streamlit-authenticator
