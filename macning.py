@@ -30,10 +30,11 @@ def main():
         unsafe_allow_html=True
     )
 
-    # Inisialisasi variabel untuk menyimpan status login
-    is_logged_in = False
+    # Inisialisasi variabel global untuk menyimpan status login
+    if 'is_logged_in' not in st.session_state:
+        st.session_state.is_logged_in = False
 
-    if not is_logged_in:
+    if not st.session_state.is_logged_in:
         st.title("Login")
         username = st.text_input("Username")
         password = st.text_input("Password", type="password")
@@ -41,11 +42,11 @@ def main():
         if st.button("Login"):
             if verify_login(username, password):
                 st.success("Login berhasil!")
-                is_logged_in = True  # Set status login menjadi True setelah berhasil login
+                st.session_state.is_logged_in = True  # Set status login menjadi True setelah berhasil login
             else:
                 st.error("Username atau password salah")
 
-    if is_logged_in:
+    if st.session_state.is_logged_in:
         # Tampilkan halaman utama jika sudah login
         st.title("Halaman Utama")
         st.write("Selamat datang di Halaman Utama! Silakan lanjutkan dengan aktivitas Anda di sini.")
