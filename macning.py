@@ -4,7 +4,7 @@ import requests
 # Fungsi untuk verifikasi login
 def verify_login(username, password):
     # Ganti URL dengan URL file txt di GitHub yang berisi username dan password
-    url = 'https://raw.githubusercontent.com/nama_pengguna/nama_repo/main/credentials.txt'
+    url = 'https://raw.githubusercontent.com/strng-fer/tubesalpro/main/user.txt'
     response = requests.get(url)
     credentials = response.text.split('\n')
     
@@ -22,7 +22,7 @@ def main():
         """
         <style>
         .reportview-container {
-            background: url('https://link_gambar_latar_belakang_mancing.jpg');
+            background: url('https://p4.wallpaperbetter.com/wallpaper/913/996/866/lofoten-norway-the-fishing-village-of-reine-at-dusk-hd-wallpapers-for-tablets-mobile-phones-laptops-and-desktop-3840%C3%972160-wallpaper-preview.jpg');
             background-size: cover;
         }
         </style>
