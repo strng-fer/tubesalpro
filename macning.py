@@ -11,7 +11,12 @@ def create_connection():
     
     # Buat string koneksi
     connection_string = f"mysql+mysqlconnector://{username}:{password}@{host}/{database_name}"
-    conn = engine.connect()
+    # Buat koneksi
+    engine = create_engine(connection_string)
+    
+    # Sekarang Anda dapat menggunakan 'engine' untuk melakukan operasi database seperti:
+    connection = engine.connect()
+    result = connection.execute("SELECT * FROM users")
     return conn
 
 # Fungsi untuk melakukan login
