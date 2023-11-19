@@ -43,6 +43,8 @@ def main():
             if verify_login(username, password):
                 st.success("Login berhasil!")
                 st.session_state.is_logged_in = True  # Set status login menjadi True setelah berhasil login
+                # Hapus halaman login setelah login berhasil
+                st.experimental_rerun()
             else:
                 st.error("Username atau password salah")
 
