@@ -18,8 +18,46 @@ def verify_login(username, password):
 
 # Fungsi untuk menambahkan catatan
 def add_note():
-    st.title("Tambah Catatan")
-    # Implementasikan logika untuk menambahkan catatan di sini
+    st.title("Tambah Catatan Mancing")
+    
+    # Memasukkan foto
+    uploaded_file = st.file_uploader("Unggah Foto", type=['jpg', 'png'])
+
+    # Memasukkan detail lokasi
+    location_details = st.text_input("Detail Lokasi")
+
+    # Memasukkan lokasi pada map untuk mendapatkan latitude dan longitude
+    gmaps_api_key = "YOUR_GOOGLE_MAPS_API_KEY"  # Ganti dengan API key Google Maps
+    gmaps = googlemaps.Client(key=gmaps_api_key)
+    location = st.text_input("Cari Lokasi")
+    if location:
+        result = gmaps.geocode(location)
+        if result:
+            latitude = result[0]['geometry']['location']['lat']
+            longitude = result[0]['geometry']['location']['lng']
+            st.write("Latitude:", latitude, "Longitude:", longitude)
+
+    # Memasukkan tanggal dan waktu
+    date_time = st.date_input("Tanggal") + st.time_input("Waktu")
+
+    # Memasukkan jenis ikan yang ditangkap
+    fish_type = st.text_input("Jenis Ikan yang Ditangkap")
+
+    # Memasukkan metode memancing
+    fishing_method = st.text_input("Metode Memancing")
+
+    # Tombol untuk menyimpan catatan memancing
+    if st.button("Simpan Catatan"):
+        # Simpan catatan memancing ke database atau file
+        st.success("Catatan Mancing Disimpan")
+
+        # Mendapatkan info cuaca
+        weather_info = get_weather_info(latitude, longitude)
+        st.subheader("Info Cuaca")
+        st.write(f"Temperatur: {weather_info['temperature']}")
+        st.write(f"Kondisi Cuaca: {weather_info['condition']}")
+        st.write(f"Kecepatan Angin: {weather_info['wind_speed']}")
+
 
 # Fungsi untuk mengedit catatan
 def edit_note():
