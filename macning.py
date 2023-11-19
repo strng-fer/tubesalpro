@@ -1,5 +1,7 @@
 import streamlit as st
 import requests
+import datetime
+import googlemaps
 
 # Fungsi untuk verifikasi login
 def verify_login(username, password):
@@ -17,15 +19,44 @@ def verify_login(username, password):
     return False
 
 # Fungsi untuk menambahkan catatan
+
+
+# Fungsi untuk mendapatkan info cuaca
+def get_weather_info(latitude, longitude):
+    # Implementasi logika untuk mendapatkan info cuaca berdasarkan latitude dan longitude
+    # Menggunakan API cuaca seperti OpenWeatherMap atau lainnya
+    # Kamu perlu mengganti dengan kode yang sesuai untuk mendapatkan info cuaca
+    
+    # Contoh sederhana untuk menampilkan cuaca
+    fake_weather = {
+        "temperature": "25°C",
+        "condition": "Cerah",
+        "wind_speed": "5 m/s"
+    }
+
+    return fake_weather
+
+# Fungsi untuk menambahkan catatan memancing
 def add_note():
     st.title("Tambah Catatan Mancing")
     
     # Memasukkan foto
+    uploaded_file = st.file_uploader("Unggah Foto", type=['jpg', 'png'])
 
     # Memasukkan detail lokasi
     location_details = st.text_input("Detail Lokasi")
 
     # Memasukkan lokasi pada map untuk mendapatkan latitude dan longitude
+    gmaps_api_key = "YOUR_GOOGLE_MAPS_API_KEY"  # Ganti dengan API key Google Maps
+    gmaps = googlemaps.Client(key=gmaps_api_key)
+    location = st.text_input("Cari Lokasi")
+    if location:
+        result = gmaps.geocode(location)
+        if result:
+            latitude = result[0]['geometry']['location']['lat']
+            longitude = result[0]['geometry']['location']['lng']
+            st.write("Latitude:", latitude, "Longitude:", longitude)
+
     # Memasukkan tanggal dan waktu
     date_time = st.date_input("Tanggal") + st.time_input("Waktu")
 
@@ -46,7 +77,6 @@ def add_note():
         st.write(f"Temperatur: {weather_info['temperature']}")
         st.write(f"Kondisi Cuaca: {weather_info['condition']}")
         st.write(f"Kecepatan Angin: {weather_info['wind_speed']}")
-
 
 # Fungsi untuk mengedit catatan
 def edit_note():
