@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 from sqlalchemy import create_engine
 
 # Fungsi untuk menghubungkan ke database SQL
@@ -8,15 +7,13 @@ def create_connection():
     password = 'FarestaHaerz135'
     host = 'localhost'
     database_name = 'journeymancing123'
-    
+
     # Buat string koneksi
     connection_string = f"mysql+mysqlconnector://{username}:{password}@{host}/{database_name}"
+
     # Buat koneksi
     engine = create_engine(connection_string)
-    
-    # Sekarang Anda dapat menggunakan 'engine' untuk melakukan operasi database seperti:
-    connection = engine.connect()
-    result = connection.execute("SELECT * FROM users")
+    conn = engine.connect()
     return conn
 
 # Fungsi untuk melakukan login
@@ -31,12 +28,12 @@ def login_page():
     st.title("Journey Mancing")
     st.markdown("## Silakan login untuk melanjutkan")
 
-    username = st.text_input("Username")
-    password = st.text_input("Password", type="password")
+    username_input = st.text_input("Username")
+    password_input = st.text_input("Password", type="password")
     login_button = st.button("Login")
 
     if login_button:
-        user = login(username, password)
+        user = login(username_input, password_input)
         if user:
             st.success("Login berhasil!")
             # Redirect ke halaman selanjutnya setelah login berhasil
@@ -44,15 +41,18 @@ def login_page():
         else:
             st.error("Login gagal. Silakan coba lagi.")
 
-# Fungsi untuk tampilan halaman utama
-def main_page():
-    st.title("Halaman Utama")
-    st.markdown("## Selamat datang di Journey Mancing!")
-    st.markdown("Silakan login untuk memulai.")
+# Tampilan background mancing dengan CSS
+st.markdown(
+    """
+    <style>
+    body {
+        background-image: url('https://example.com/background-image.jpg');
+        background-size: cover;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
-# Logika untuk menampilkan halaman login atau halaman utama berdasarkan status login
-is_logged_in = False  # Ganti dengan fungsi cek login yang sesuai
-if is_logged_in:
-    main_page()
-else:
-    login_page()
+# Tampilkan halaman login
+login_page()
