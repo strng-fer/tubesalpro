@@ -21,22 +21,11 @@ def add_note():
     st.title("Tambah Catatan Mancing")
     
     # Memasukkan foto
-    uploaded_file = st.file_uploader("Unggah Foto", type=['jpg', 'png'])
 
     # Memasukkan detail lokasi
     location_details = st.text_input("Detail Lokasi")
 
     # Memasukkan lokasi pada map untuk mendapatkan latitude dan longitude
-    gmaps_api_key = "YOUR_GOOGLE_MAPS_API_KEY"  # Ganti dengan API key Google Maps
-    gmaps = googlemaps.Client(key=gmaps_api_key)
-    location = st.text_input("Cari Lokasi")
-    if location:
-        result = gmaps.geocode(location)
-        if result:
-            latitude = result[0]['geometry']['location']['lat']
-            longitude = result[0]['geometry']['location']['lng']
-            st.write("Latitude:", latitude, "Longitude:", longitude)
-
     # Memasukkan tanggal dan waktu
     date_time = st.date_input("Tanggal") + st.time_input("Waktu")
 
