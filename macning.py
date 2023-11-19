@@ -4,7 +4,13 @@ from sqlalchemy import create_engine
 
 # Fungsi untuk menghubungkan ke database SQL
 def create_connection():
-    engine = create_engine('mysql+mysqlconnector://username:password@localhost/nama_database')
+    username = 'root'
+    password = 'FarestaHaerz135'
+    host = 'localhost'
+    database_name = 'journeymancing123'
+    
+    # Buat string koneksi
+    connection_string = f"mysql+mysqlconnector://{username}:{password}@{host}/{database_name}"
     conn = engine.connect()
     return conn
 
