@@ -16,6 +16,10 @@ def verify_login(username, password):
     
     return False
 
+def homepage():
+    st.title("Journey Mancing - Halaman Utama")
+    st.write("Selamat datang di Halaman Utama! Silakan lanjutkan dengan aktivitas Anda di sini.")
+
 def main():
     st.title("Journey Mancing")
     st.markdown(
@@ -46,11 +50,7 @@ def main():
                 st.success("Login berhasil!")
                 st.session_state.is_logged_in = True  # Set status login menjadi True setelah berhasil login
                 login_container.empty()  # Sembunyikan halaman login setelah login berhasil
-
-    if st.session_state.is_logged_in:
-        # Tampilkan halaman utama jika sudah login
-        st.title("Halaman Utama")
-        st.write("Selamat datang di Halaman Utama! Silakan lanjutkan dengan aktivitas Anda di sini.")
+                homepage()  # Tampilkan homepage setelah login berhasil
 
 if __name__ == "__main__":
     main()
