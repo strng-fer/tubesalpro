@@ -9,9 +9,10 @@ def verify_login(username, password):
     credentials = response.text.split('\n')
     
     for cred in credentials:
-        stored_username, stored_password = cred.split(',')
-        if username == stored_username and password == stored_password:
-            return True
+        if ',' in cred:
+            stored_username, stored_password = cred.split(',')
+            if username == stored_username and password == stored_password:
+                return True
     
     return False
 
