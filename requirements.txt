@@ -1,4 +1,5 @@
 apps
+googlemaps
 sqlalchemy
 mysql-connector-python
 webbrowser
