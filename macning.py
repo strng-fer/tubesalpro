@@ -16,6 +16,21 @@ def verify_login(username, password):
     
     return False
 
+# Fungsi untuk menambahkan catatan
+def add_note():
+    st.title("Tambah Catatan")
+    # Implementasikan logika untuk menambahkan catatan di sini
+
+# Fungsi untuk mengedit catatan
+def edit_note():
+    st.title("Edit Catatan")
+    # Implementasikan logika untuk mengedit catatan di sini
+
+# Fungsi untuk menghapus catatan
+def delete_note():
+    st.title("Hapus Catatan")
+    # Implementasikan logika untuk menghapus catatan di sini
+
 def login_page():
     st.title("Login")
     username = st.text_input("Username")
@@ -32,7 +47,14 @@ def login_page():
 
 def main_page():
     st.title("Halaman Utama")
-    st.write("Selamat datang di Halaman Utama! Silakan lanjutkan dengan aktivitas Anda di sini.")
+    option = st.selectbox("Pilih Operasi", ["Tambah Catatan", "Edit Catatan", "Hapus Catatan"])
+
+    if option == "Tambah Catatan":
+        add_note()
+    elif option == "Edit Catatan":
+        edit_note()
+    elif option == "Hapus Catatan":
+        delete_note()
 
 def main():
     if not login_page():
