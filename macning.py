@@ -22,7 +22,7 @@ def main():
         """
         <style>
         .reportview-container {
-            background: url('https://p4.wallpaperbetter.com/wallpaper/600/885/315/fishing-astronaut-person-fishing-in-crack-area-illustration-wallpaper-preview.jpg');
+            background: url('https://p4.wallpaperbetter.com/wallpaper/600/885/315/fishing-astronaut-person-fishing-in-crack-area-illustration-wallpaper-preview.jpg?t=1');
             background-size: cover;
         }
         </style>
