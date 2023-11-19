@@ -3,6 +3,7 @@ import requests
 
 # Fungsi untuk verifikasi login
 def verify_login(username, password):
+    # Ganti URL dengan URL file txt di GitHub yang berisi username dan password
     url = 'https://raw.githubusercontent.com/strng-fer/tubesalpro/main/user.txt'
     response = requests.get(url)
     credentials = response.text.split('\n')
@@ -29,6 +30,8 @@ def main():
         unsafe_allow_html=True
     )
 
+    login_container = st.empty()
+
     # Inisialisasi variabel global untuk menyimpan status login
     if 'is_logged_in' not in st.session_state:
         st.session_state.is_logged_in = False
@@ -42,18 +45,12 @@ def main():
             if verify_login(username, password):
                 st.success("Login berhasil!")
                 st.session_state.is_logged_in = True  # Set status login menjadi True setelah berhasil login
+                login_container.empty()  # Sembunyikan halaman login setelah login berhasil
 
     if st.session_state.is_logged_in:
         # Tampilkan halaman utama jika sudah login
         st.title("Halaman Utama")
         st.write("Selamat datang di Halaman Utama! Silakan lanjutkan dengan aktivitas Anda di sini.")
-        st.experimental_run_on_streamlit_done(rerun_app)
-
-def rerun_app():
-    # Fungsi untuk rerun aplikasi
-    import time
-    time.sleep(2)  # Tunggu 2 detik sebelum rerun aplikasi
-    st.experimental_rerun()
 
 if __name__ == "__main__":
     main()
