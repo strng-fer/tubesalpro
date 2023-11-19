@@ -9,7 +9,7 @@ def create_connection():
     database_name = 'journeymancing123'
 
     # Buat string koneksi
-    connection_string = f"mysql+mysqlconnector://{username}:{password}@{host}/{database_name}"
+    connection_string = f"mysql+mysqlconnector://{username}:{password}@{host}/{database_name}, pool_size=10, max_overflow=20)"
 
     # Buat koneksi
     engine = create_engine(connection_string)
