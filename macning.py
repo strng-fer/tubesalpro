@@ -60,11 +60,11 @@ def add_note():
 
     # Memasukkan lokasi pada map untuk mendapatkan latitude dan longitude
     location = st.text_input("Cari Lokasi")
-        if location:
-            coordinates = get_coordinates(location)
-            if coordinates:
-                latitude, longitude = coordinates
-                st.write("Latitude:", latitude, "Longitude:", longitude)
+    if location:
+        coordinates = get_coordinates(location)
+        if coordinates:
+            latitude, longitude = coordinates
+            st.write("Latitude:", latitude, "Longitude:", longitude)
     # Memasukkan tanggal dan waktu
     date_time = st.date_input("Tanggal") + st.time_input("Waktu")
 
