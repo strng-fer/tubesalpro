@@ -3,6 +3,38 @@ import requests
 import datetime
 import googlemaps
 
+import requests
+import datetime
+
+# Function to get latitude and longitude using Bing Maps API
+def get_coordinates(location):
+    bing_maps_api_key = "Ag3lpNHBmRK6m0_yR0F-0IkUghCAglU5Yl4x8a0oJbkCoCB6-4Ha_UQelLt7C6SK"  # Replace with your Bing Maps API key
+    url = f"https://dev.virtualearth.net/REST/v1/Locations?q={location}&key={bing_maps_api_key}"
+    response = requests.get(url)
+    data = response.json()
+    
+    if response.status_code == 200 and data.get('resourceSets'):
+        coordinates = data['resourceSets'][0]['resources'][0]['point']['coordinates']
+        return coordinates  # Return latitude and longitude as [latitude, longitude]
+    else:
+        return None
+
+# Function to get weather info from a suitable weather API using latitude and longitude
+def get_weather_info(latitude, longitude):
+    # Implement logic to fetch weather info from a weather API using latitude and longitude
+    # Use an appropriate weather API (e.g., OpenWeatherMap, WeatherAPI, etc.)
+    # Replace the code here with the API call to get weather information
+
+    # Example fake weather data
+    fake_weather = {
+        "temperature": "25°C",
+        "condition": "Sunny",
+        "wind_speed": "5 m/s"
+    }
+
+    return fake_weather
+
+
 # Fungsi untuk verifikasi login
 def verify_login(username, password):
     # Ganti URL dengan URL file txt di GitHub yang berisi username dan password
@@ -18,24 +50,6 @@ def verify_login(username, password):
     
     return False
 
-# Fungsi untuk menambahkan catatan
-
-
-# Fungsi untuk mendapatkan info cuaca
-def get_weather_info(latitude, longitude):
-    # Implementasi logika untuk mendapatkan info cuaca berdasarkan latitude dan longitude
-    # Menggunakan API cuaca seperti OpenWeatherMap atau lainnya
-    # Kamu perlu mengganti dengan kode yang sesuai untuk mendapatkan info cuaca
-    
-    # Contoh sederhana untuk menampilkan cuaca
-    fake_weather = {
-        "temperature": "25°C",
-        "condition": "Cerah",
-        "wind_speed": "5 m/s"
-    }
-
-    return fake_weather
-
 # Fungsi untuk menambahkan catatan memancing
 def add_note():
     st.title("Tambah Catatan Mancing")
@@ -47,16 +61,12 @@ def add_note():
     location_details = st.text_input("Detail Lokasi")
 
     # Memasukkan lokasi pada map untuk mendapatkan latitude dan longitude
-    gmaps_api_key = "YOUR_GOOGLE_MAPS_API_KEY"  # Ganti dengan API key Google Maps
-    gmaps = googlemaps.Client(key=gmaps_api_key)
     location = st.text_input("Cari Lokasi")
-    if location:
-        result = gmaps.geocode(location)
-        if result:
-            latitude = result[0]['geometry']['location']['lat']
-            longitude = result[0]['geometry']['location']['lng']
-            st.write("Latitude:", latitude, "Longitude:", longitude)
-
+        if location:
+            coordinates = get_coordinates(location)
+            if coordinates:
+                latitude, longitude = coordinates
+                st.write("Latitude:", latitude, "Longitude:", longitude)
     # Memasukkan tanggal dan waktu
     date_time = st.date_input("Tanggal") + st.time_input("Waktu")
 
