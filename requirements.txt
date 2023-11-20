@@ -1,6 +1,2 @@
 datetime
-googlemaps
-sqlalchemy
-mysql-connector-python
-webbrowser
 streamlit-authenticator
